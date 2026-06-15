@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useApp, UserRole } from '@/context/AppContext';
 import Navigation from '@/components/Navigation';
 import { Shield, Key, Mail, Phone, MapPin, Heart, ArrowRight, Check, AlertCircle } from 'lucide-react';
 
-export default function AuthPage() {
+function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, registerDonor, currentUser } = useApp();
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [role, setRole] = useState<UserRole>('donor');
-  
+
   // Form States
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -25,12 +25,12 @@ export default function AuthPage() {
   const [location, setLocation] = useState('Central District');
   const [organDonor, setOrganDonor] = useState(false);
   const [password, setPassword] = useState('');
-  
+
   // OTP States
   const [showOtp, setShowOtp] = useState(false);
   const [otpCode, setOtpCode] = useState('');
   const [otpError, setOtpError] = useState('');
-  
+
   // General feedback
   const [formError, setFormError] = useState('');
 
@@ -119,7 +119,7 @@ export default function AuthPage() {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-100 rounded-full blur-[90px] -z-10"></div>
 
         <div className="w-full max-w-[500px] bg-white rounded-3xl border border-gray-100 shadow-2xl p-6 sm:p-8">
-          
+
           {/* OTP Screen */}
           {showOtp ? (
             <div className="space-y-6 text-center">
@@ -202,7 +202,7 @@ export default function AuthPage() {
               )}
 
               <form onSubmit={handleAuthSubmit} className="space-y-4">
-                
+
                 {/* Role Switcher for login */}
                 {activeTab === 'login' && (
                   <div className="space-y-1.5">
@@ -396,5 +396,13 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slatebg flex items-center justify-center font-sans text-navy-900">Loading LifeLink...</div>}>
+      <AuthContent />
+    </Suspense>
   );
 }
