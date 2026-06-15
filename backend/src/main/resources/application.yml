@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: lifelink-core-api
+  
+  # PostgreSQL database connection configuration
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:lifelink}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  
+  # Redis cache cluster settings
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      time-to-live: 3600000 # 1 hour default cache expiration
+
+# Twilio SMS API Configurations
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+  auth-token: ${TWILIO_AUTH_TOKEN:your_auth_token_here}
+  phone-number: ${TWILIO_PHONE_NUMBER:+15550001111}
+
+# AWS S3 Storage Credentials (organ documents, licenses)
+aws:
+  s3:
+    bucket-name: ${AWS_S3_BUCKET:lifelink-clinical-storage}
+    region: ${AWS_DEFAULT_REGION:us-east-1}
+    access-key: ${AWS_ACCESS_KEY_ID:AKIAXXXXXXXXXXXXXXXX}
+    secret-key: ${AWS_SECRET_ACCESS_KEY:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY}
+
+# JWT security keys
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY:9a4f2c8d3e1b7f0a5c6d8e2a1b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3}
+    expiration-ms: 86400000 # 24 Hours duration

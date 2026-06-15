@@ -1,0 +1,26 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Java/Spring Boot
+target/
+*.class
+*.jar
+*.war
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# IDEs and OS files
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
